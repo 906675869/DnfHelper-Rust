@@ -1,4 +1,13 @@
+use pkg::helpers::{int_to_byte_arr,add_byte_arr};
 
 fn main() {
-    println!("Hello, world!");
+    let num: u32 = 65536;
+    let byte_arr = int_to_byte_arr(num);
+    println!("{:?}", byte_arr);
+
+    let old_byte_arr = vec![0x01, 0x02];
+    let new_byte_arr1 = vec![0x03, 0x04];
+    let new_byte_arr2 = vec![0x05, 0x06];
+    let res = add_byte_arr(old_byte_arr, &[&new_byte_arr1, &new_byte_arr2]);
+    println!("{:?}", res);
 }
