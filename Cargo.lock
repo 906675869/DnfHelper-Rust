@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "DnfHelper-Rust"
+name = "dnf_helper_rust"
 version = "0.1.0"
