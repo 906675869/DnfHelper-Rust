@@ -1,6 +1,3 @@
-use std::ffi::{CString, CStr};
-use libc::{c_void, c_char, c_uint, uint32_t, uint64_t};
-
 // 定义 trait
 pub trait Driver {
     fn load_driver(&mut self, driver_file_path: &str, service_name: &str, display_name: &str) -> bool;
