@@ -1,17 +1,17 @@
-// src/main.rs
-pub mod utils;
+pub mod game;
+pub mod pkg;
 
-use crate::utils::rwtool::rw::*;
+use pkg::helpers::array;
+use game::address;
 
 fn main() {
-    // let num: u32 = 65536;
-    // let byte_arr = int_to_byte_arr(num);
-    // println!("{:?}", byte_arr);
-    //
-    // let old_byte_arr = vec![0x01, 0x02];
-    // let new_byte_arr1 = vec![0x03, 0x04];
-    // let new_byte_arr2 = vec![0x05, 0x06];
-    // let res = add_byte_arr(old_byte_arr, &[&new_byte_arr1, &new_byte_arr2]);
+    let data = vec![1, 2, 3, 4, 5];
+    let check_data = 3;
+    if array::in_array(check_data, &data) {
+        println!("{} is in the array.", check_data);
+    } else {
+        println!("{} is not in the array.", check_data);
+    }
 
-    let _aa = getname(String::from("太酷了"));
+    println!("{} is",address::BbJzAddr)
 }

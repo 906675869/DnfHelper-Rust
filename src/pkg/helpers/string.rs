@@ -1,4 +1,4 @@
-fn ascii_to_unicode(s: &str) -> Vec<u8> {
+pub fn ascii_to_unicode(s: &str) -> Vec<u8> {
     let mut bytes_arr = Vec::new();
     for c in s.chars() {
         let hex_int = c as u32;
@@ -8,7 +8,7 @@ fn ascii_to_unicode(s: &str) -> Vec<u8> {
     bytes_arr
 }
 
-fn unicode_to_ascii(ls: &[u8]) -> String {
+pub fn unicode_to_ascii(ls: &[u8]) -> String {
     let mut text = String::new();
     for i in (0..ls.len()).step_by(2) {
         if ls[i] == 0 && ls[i + 1] == 0 {
