@@ -14,10 +14,4 @@ fn main() {
     // let res = add_byte_arr(old_byte_arr, &[&new_byte_arr1, &new_byte_arr2]);
 
     let _aa = getname(String::from("太酷了"));
-
-
-
-
-
-
 }
