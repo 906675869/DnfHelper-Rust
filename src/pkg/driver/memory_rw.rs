@@ -2,13 +2,13 @@ use winapi::shared::minwindef::{LPVOID, DWORD};
 use winapi::um::processthreadsapi::{OpenProcess};
 use winapi::um::handleapi::{CloseHandle};
 use winapi::um::memoryapi::{ReadProcessMemory, WriteProcessMemory};
-use winapi::um::winnt::{PROCESS_VM_READ, PROCESS_VM_WRITE, PROCESS_QUERY_INFORMATION};
+use winapi::um::winnt::{PROCESS_ALL_ACCESS};
 
 pub fn read_process_memory(process_id: DWORD, address: LPVOID, buffer: &mut [u8]) -> bool {
     // 打开进程句柄
     let process_handle = unsafe {
         OpenProcess(
-            PROCESS_VM_READ | PROCESS_QUERY_INFORMATION,  // 读取进程内存和查询进程信息权限
+            PROCESS_ALL_ACCESS,  // 所有权限
             false as i32,  // 不继承句柄
             process_id,  // 进程 ID
         )
@@ -44,7 +44,7 @@ pub fn write_process_memory(process_id: DWORD, address: LPVOID, buffer: &[u8]) -
     // 打开进程句柄
     let process_handle = unsafe {
         OpenProcess(
-            PROCESS_VM_WRITE | PROCESS_QUERY_INFORMATION,  // 写入进程内存和查询进程信息权限
+            PROCESS_ALL_ACCESS,  // 所有权限
             false as i32,  // 不继承句柄
             process_id,  // 进程 ID
         )
