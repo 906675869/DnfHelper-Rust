@@ -1,10 +1,12 @@
 pub mod game;
 pub mod pkg;
 
+use winapi::shared::minwindef::LPVOID;
 use pkg::helpers::array;
 use pkg::helpers::string;
 use pkg::helpers::bytes;
 use game::address;
+use pkg::driver::memory_rw::{*};
 
 fn main() {
     let data = vec![1, 2, 3, 4, 5];
@@ -33,4 +35,27 @@ fn main() {
     let result = bytes::add_byte_arr(old_byte_arr, new_byte_arr);
 
     println!("{:?}", result);
+}
+
+
+fn mem(){
+    // 示例：从进程 ID 为 1234 的进程内存地址 0x00400000 处读取 4 个字节
+    let process_id = 1234;
+    let address: LPVOID = 0x00400000 as LPVOID;
+    let mut buffer = [0u8; 4];
+    if read_process_memory(process_id, address, &mut buffer) {
+        // 读取成功
+    } else {
+        // 读取失败
+    }
+
+    // 示例：向进程 ID 为 1234 的进程内存地址 0x00400000 处写入 4 个字节
+    let process_id = 1234;
+    let address: LPVOID = 0x00400000 as LPVOID;
+    let buffer = [1u8, 2u8, 3u8, 4u8];
+    if write_process_memory(process_id, address, &buffer) {
+        // 写入成功
+    } else {
+        // 写入失败
+    }
 }
