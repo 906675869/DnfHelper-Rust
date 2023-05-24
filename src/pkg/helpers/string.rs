@@ -1,9 +1,9 @@
 pub fn ascii_to_unicode(s: &str) -> Vec<u8> {
     let mut bytes_arr = Vec::new();
     for c in s.chars() {
-        let hex_int = c as u32;
-        let mut hex_bytes = hex_int.to_le_bytes().to_vec(); // 将整数转换为小端字节序的字节数组，并转换为 Vec<u8>
-        bytes_arr.append(&mut hex_bytes); // 将字节数组追加到结果数组中
+        let hex_int = c as u16;
+        let mut hex_bytes = hex_int.to_le_bytes().to_vec();
+        bytes_arr.append(&mut hex_bytes);
     }
     bytes_arr
 }
