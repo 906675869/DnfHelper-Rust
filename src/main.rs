@@ -59,10 +59,11 @@ fn mem() {
         println!("读取成功");
         println!("{:?}", buffer);
 
-        let num: u32 = u32::from_ne_bytes(buffer);
+        let num32: u32 = u32::from_ne_bytes(buffer);
         let fl32: f32 = f32::from_ne_bytes(buffer);
-        println!("{}", num); // 输出: 255
-        println!("{}", fl32); // 输出: 255
+
+        println!("{}", num32);
+        println!("{}", fl32);
     } else {
         println!("读取失败");
     }
