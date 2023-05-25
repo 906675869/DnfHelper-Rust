@@ -15,7 +15,8 @@ winapi = { version = "0.3", features = [
     "memoryapi",
     "winnt",
     "minwindef",
-    "winsvc"
+    "winsvc",
+    "basetsd"
 ] }
 
 

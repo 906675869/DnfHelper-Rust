@@ -1,8 +1,33 @@
 use winapi::shared::minwindef::{LPVOID, DWORD};
 use winapi::um::processthreadsapi::{OpenProcess};
 use winapi::um::handleapi::{CloseHandle};
-use winapi::um::memoryapi::{ReadProcessMemory, WriteProcessMemory};
-use winapi::um::winnt::{PROCESS_ALL_ACCESS};
+use winapi::um::memoryapi::{ReadProcessMemory, WriteProcessMemory, VirtualAllocEx};
+use winapi::um::winnt::{PROCESS_ALL_ACCESS,MEM_COMMIT, MEM_RESERVE, PAGE_READWRITE};
+
+pub fn virtual_alloc_ex(process_id: DWORD) -> LPVOID {
+    // 打开进程句柄
+    let process_handle = unsafe {
+        OpenProcess(
+            PROCESS_ALL_ACCESS,  // 所有权限
+            false as i32,  // 不继承句柄
+            process_id,  // 进程 ID
+        )
+    };
+    if process_handle.is_null() {
+        return 0 as LPVOID;
+    }
+
+    let address = unsafe {
+        VirtualAllocEx(
+            process_handle,
+            std::ptr::null_mut(),
+            4096,
+            MEM_RESERVE | MEM_COMMIT,
+            PAGE_READWRITE,
+        )
+    };
+    address
+}
 
 pub fn read_process_memory(process_id: DWORD, address: LPVOID, buffer: &mut [u8]) -> bool {
     // 打开进程句柄
