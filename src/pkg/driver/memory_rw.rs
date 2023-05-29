@@ -1,10 +1,10 @@
-use winapi::shared::minwindef::{LPVOID, DWORD};
-use winapi::um::processthreadsapi::{OpenProcess};
-use winapi::um::handleapi::{CloseHandle};
-use winapi::um::memoryapi::{ReadProcessMemory, WriteProcessMemory, VirtualAllocEx};
-use winapi::um::winnt::{PROCESS_ALL_ACCESS,MEM_COMMIT, MEM_RESERVE, PAGE_READWRITE};
+use winapi::shared::minwindef::{DWORD, LPVOID};
+use winapi::um::handleapi::CloseHandle;
+use winapi::um::memoryapi::{ReadProcessMemory, VirtualAllocEx, WriteProcessMemory};
+use winapi::um::processthreadsapi::OpenProcess;
+use winapi::um::winnt::{MEM_COMMIT, MEM_RESERVE, PAGE_READWRITE, PROCESS_ALL_ACCESS};
 
-pub fn virtual_alloc_ex(process_id: DWORD) -> LPVOID {
+pub fn alloc_memory(process_id: DWORD) -> LPVOID {
     // 打开进程句柄
     let process_handle = unsafe {
         OpenProcess(
@@ -29,7 +29,7 @@ pub fn virtual_alloc_ex(process_id: DWORD) -> LPVOID {
     address
 }
 
-pub fn read_process_memory(process_id: DWORD, address: LPVOID, buffer: &mut [u8]) -> bool {
+pub fn read_bytes(process_id: DWORD, address: LPVOID, buffer: &mut [u8]) -> bool {
     // 打开进程句柄
     let process_handle = unsafe {
         OpenProcess(
@@ -65,7 +65,7 @@ pub fn read_process_memory(process_id: DWORD, address: LPVOID, buffer: &mut [u8]
     true
 }
 
-pub fn write_process_memory(process_id: DWORD, address: LPVOID, buffer: &[u8]) -> bool {
+pub fn write_bytes(process_id: DWORD, address: LPVOID, buffer: &[u8]) -> bool {
     // 打开进程句柄
     let process_handle = unsafe {
         OpenProcess(

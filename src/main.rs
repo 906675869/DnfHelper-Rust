@@ -1,5 +1,5 @@
 use game::address;
-use pkg::driver::memory_rw::{read_process_memory, virtual_alloc_ex, write_process_memory};
+use pkg::driver::memory_rw as rw;
 use pkg::helpers::{array, bytes, string};
 
 pub mod game;
@@ -40,22 +40,26 @@ fn main() {
 
 fn mem() {
     // 示例：从进程 ID 为 1234 的进程内存地址 0x00400000 处读取 4 个字节
-    let process_id = 16192;
+    let process_id = 1140;
 
-    let address = virtual_alloc_ex(process_id);
+    let address = rw::alloc_memory(process_id);
     println!("{:?}", address);
+    let byte_arr = bytes::int_to_byte_arr(address as u32);
+    println!("{:x?}", byte_arr);
 
-    let buffer = [1u8, 2u8, 3u8, 4u8];
-    if write_process_memory(process_id, address, &buffer) {
+    let n: u64 = bytes::byte_arr_to_int(&byte_arr);
+    println!("{}", n);
+
+    if rw::write_bytes(process_id, address, &byte_arr) {
         println!("写入成功");
-        println!("{:?}", buffer);
+        println!("{:?}", byte_arr);
     } else {
         println!("写入失败");
     }
 
 
     let mut buffer: [u8; 4] = [0u8; 4];
-    if read_process_memory(process_id, address, &mut buffer) {
+    if rw::read_bytes(process_id, address, &mut buffer) {
         println!("读取成功");
         println!("{:?}", buffer);
 
