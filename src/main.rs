@@ -1,6 +1,12 @@
+use std::thread;
+use std::thread::sleep;
+use std::time::Duration;
+
 use game::address;
 use pkg::driver::memory_rw as rw;
 use pkg::helpers::{array, bytes, string};
+
+use crate::pkg::helpers::sleep_ms;
 
 pub mod game;
 pub mod pkg;
@@ -32,11 +38,8 @@ fn main() {
     let result = bytes::add_byte_arr(old_byte_arr, new_byte_arr);
 
     println!("{:?}", result);
-
-
     mem();
 }
-
 
 fn mem() {
     // 示例：从进程 ID 为 1234 的进程内存地址 0x00400000 处读取 4 个字节
@@ -46,9 +49,6 @@ fn mem() {
     println!("{:?}", address);
     let byte_arr = bytes::int_to_byte_arr(address as u32);
     println!("{:x?}", byte_arr);
-
-    let n: u64 = bytes::byte_arr_to_int(&byte_arr);
-    println!("{}", n);
 
     if rw::write_bytes(process_id, address, &byte_arr) {
         println!("写入成功");

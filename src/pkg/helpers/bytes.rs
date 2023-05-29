@@ -25,30 +25,6 @@ pub fn int_to_byte_arr<T: Into<u64>>(num: T) -> Vec<u8> {
     byte_arr
 }
 
-pub fn byte_arr_to_int<T: From<u16> + From<u32> + From<u64> + Default>(byte_arr: &Vec<u8>) -> T {
-    let mut data: T = Default::default();
-    let size_of_data = mem::size_of::<T>();
-    let bytes = &byte_arr[size_of_data];
-
-    match bytes.len() {
-        2 => {
-            let val = u16::from_le_bytes(bytes.try_into().unwrap());
-            data = T::from(val);
-        }
-        4 => {
-            let val = u32::from_le_bytes(bytes.try_into().unwrap());
-            data = T::from(val);
-        }
-        8 => {
-            let val = u64::from_le_bytes(bytes.try_into().unwrap());
-            data = T::from(val);
-        }
-        _ => {}
-    }
-
-    data
-}
-
 
 pub fn byte_arr_to_float<T: From<f32> + From<f64> + Default>(byte_arr: &[u8]) -> T {
     match std::mem::size_of::<T>() {

@@ -1,3 +1,4 @@
+pub mod init;
 pub mod address;
 pub mod asm;
 pub mod auto;
