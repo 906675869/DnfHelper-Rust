@@ -14,6 +14,8 @@ use winapi::um::winuser::{
 use crate::game::auto::Auto;
 
 pub fn hotkey() {
+    let mut a = Auto::new();
+
     unsafe {
         // Register hotkeys
         RegisterHotKey(null_mut(), 0, 0, VK_F1 as u32);
@@ -45,7 +47,7 @@ pub fn hotkey() {
                     println!("VK_F4");
                 }
                 if (msg.lParam >> 16) as c_int == VK_END {
-                    Auto::new().screen_switch();
+                    a.thread_switch();
                 }
                 if (msg.lParam >> 16) as c_int == VK_OEM_3 {
                     println!("无形秒杀");
